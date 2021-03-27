@@ -10,7 +10,6 @@ export default class App extends React.Component {
   }
 
   render() {
-    console.log("Hey!")
     return (
       <h2>Hello from React!</h2>
     )
