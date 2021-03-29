@@ -1,8 +1,8 @@
 {
-  "name": "app",
-  "productName": "app",
+  "name": "electron-shortcuts",
+  "productName": "Shortcuts",
   "version": "1.0.0",
-  "description": "My Electron application description",
+  "description": "iOS-like shortcuts for desktop",
   "main": ".webpack/main",
   "scripts": {
     "start": "electron-forge start",
@@ -19,12 +19,14 @@
   "license": "MIT",
   "config": {
     "forge": {
-      "packagerConfig": {},
+      "packagerConfig": {
+        "icon": "ShortcutsLogo.ico"
+      },
       "makers": [
         {
           "name": "@electron-forge/maker-squirrel",
           "config": {
-            "name": "app"
+            "name": "Shortcuts"
           }
         },
         {
