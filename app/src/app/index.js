@@ -1,4 +1,7 @@
 import * as React from 'react';
+
+import Overlay from './components/overlay';
+
 const fs = require("fs");
 
 export default class App extends React.Component {
@@ -7,14 +10,14 @@ export default class App extends React.Component {
 
     this.state = {
       readContent: "",
+      code: "",
     };
   }
 
   componentDidMount() {
-    console.log("Mounted");
     // Test read/write of json containing shortcuts
-    fs.writeFileSync("shortcuts.json", '{"test": 123}');
-    const read = fs.readFileSync("shortcuts.json").toString();
+    fs.writeFileSync("./config/shortcuts.json", '{"test": 123}');
+    const read = fs.readFileSync("./config/shortcuts.json").toString();
     this.setState({ readContent: read });
   }
 
@@ -24,9 +27,13 @@ export default class App extends React.Component {
 
   render() {
     return (
-      <div className="main-bg">
-        <h2>Hello from React!</h2>
-        <p>{this.state.readContent}</p>
+      <div className="main-container">
+        <div className="shortcuts-bg">
+          <h2>Hello from React!</h2>
+          <p>{this.state.readContent}</p>
+        </div>
+        
+        <Overlay />
       </div>
     )
   }

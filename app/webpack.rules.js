@@ -24,6 +24,29 @@ module.exports = [
       }
     }
   },
+  // ttf loader so that monaco works properly
+  {
+    test: /\.ttf$/,
+    use: [
+      {
+        loader: 'ttf-loader',
+        options: {
+          name: './font/[hash].[ext]',
+        },
+      },
+    ]
+  },
+  // font loader for fa
+  // {
+  //   test: /\.(ttf|eot|svg|woff(2)?)(\?[a-z0-9=&.]+)?$/,
+  //   use: [
+  //     {
+  //       loader: "file-loader",
+  //     },
+  //   ]
+  // },
+
+  
   // Put your webpack loader rules in this array.  This is where you would put
   // your ts-loader configuration for instance:
   /**
