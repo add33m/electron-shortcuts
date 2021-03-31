@@ -12,6 +12,11 @@ if (!fs.existsSync("./config")) {
   }
 }
 
+// Add all fas icons so that shortcuts.json can use them
+import { library } from '@fortawesome/fontawesome-svg-core';
+import { fas } from '@fortawesome/free-solid-svg-icons';
+library.add(fas);
+
 function render() {
   ReactDOM.render(<App />, document.getElementById("root"));
 }

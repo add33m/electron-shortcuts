@@ -1,0 +1,18 @@
+[
+  {
+    "name": "A longer bit of text",
+    "color": "#ffcc00",
+    "icon": "sun",
+    "http": {
+
+    }
+  },
+  {
+    "name": "A title",
+    "color": "#002b80",
+    "icon": "moon",
+    "http": {
+
+    }
+  }
+]

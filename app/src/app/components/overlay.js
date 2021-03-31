@@ -2,7 +2,6 @@ import React from 'react';
 import { shell } from 'electron';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faSyncAlt, faPencilAlt } from '@fortawesome/free-solid-svg-icons';
 
 import '../styles/overlay.css';
 
@@ -21,10 +20,15 @@ export default class Overlay extends React.Component {
             shell.showItemInFolder(process.cwd() + "\\config\\shortcuts.json");
           }}
         >
-          <FontAwesomeIcon icon={faPencilAlt} />
+          <FontAwesomeIcon icon="pencil-alt" />
         </li>
-        <li className="overlayButton-item">
-          <FontAwesomeIcon icon={faSyncAlt} />
+        <li className="overlayButton-item"
+          onClick = {() => {
+            // Update config in parent
+            this.props.update();
+          }}
+        >
+          <FontAwesomeIcon icon="sync-alt" />
         </li>
       </ul>
     )
