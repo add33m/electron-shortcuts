@@ -11,6 +11,20 @@ body {
   background-color: #111;
 }
 
+.main-error {
+  margin: 20px;
+  padding: 10px;
+  background-color: #ff4d4d;
+  color: white;
+}
+
+.main-message {
+  margin: 20px;
+  padding: 10px;
+  background-color: #3959cd;
+  color: white;
+}
+
 .shortcuts-bg {
   display: flex;
   flex-direction: row;
