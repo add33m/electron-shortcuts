@@ -23,17 +23,18 @@ export default class App extends React.Component {
   }
 
   updateConfig() {
+    this.setState({ loading: true, loadError: "" });
     // Read contents of shortcuts file and save to state
     fs.readFile("./config/shortcuts.json", (err, data) => {
       // Display error if file was not able to be loaded
-      if (err) this.setState({ loadError: "An error occured loading 'shortcuts.json'. Does it exist?\n" + err });
+      if (err) this.setState({ shortcuts: [], loading: false, loadError: "An error occured loading 'shortcuts.json'. Does it exist?\n" + err });
 
       // Wrap JSON parse and display error if something happens (parse will fail if JSON is not correctly formatted)
       try {
         const read = JSON.parse(data);
         this.setState({ shortcuts: read, loading: false });
-      } catch (e) {
-        this.setState({ loadError: "An error occured reading 'shortcuts.json'. Is the JSON properly formatted?\n" + err });
+      } catch (parseErr) {
+        this.setState({ shortcuts: [], loading: false, loadError: "An error occured reading 'shortcuts.json'. Is the JSON properly formatted?\n" + parseErr });
       }
     });
   }
@@ -42,9 +43,10 @@ export default class App extends React.Component {
     return (
       <div className="main-container">
         <div className="shortcuts-bg">
-          {/* <p>{JSON.stringify(this.state.shortcuts)}</p> */}
+          {/* { this.state.loading && (<p>Loading...</p>) } */}
+          { this.state.loadError && (<p>{this.state.loadError}</p>) }
 
-          { this.state.shortcuts.map(shortcut => <Shortcut {...shortcut} />) }
+          { this.state.shortcuts.length > 0 && this.state.shortcuts.map(shortcut => <Shortcut {...shortcut} />) }
         </div>
         
         <Overlay update={this.updateConfig} />

@@ -4,7 +4,10 @@
     "color": "#ffcc00",
     "icon": "sun",
     "http": {
-
+      "url": "https://www.google.com",
+      "options": {
+        "method": "GET"
+      }
     }
   },
   {

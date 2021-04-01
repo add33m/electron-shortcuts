@@ -2,6 +2,8 @@ import React from 'react';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
+const https = require('https');
+
 import '../styles/shortcut.css';
 
 // Renders the overlay (buttons for editing/updating config)
@@ -10,20 +12,52 @@ export default class Shortcut extends React.Component {
     super(props);
 
     this.state = {
-      status: "ready",
+      status: "ready", // Show status of request when it's finished
     };
+
+    this.debounce = false; // Prevent reactivation before previous request has been finished
 
     this.action = this.action.bind(this);
   }
 
   action() {
-    const it = this;
-    setTimeout(() => it.setState({ status: "ok" }), 0);
-    setTimeout(() => it.setState({ status: "err" }), 2000);
-    setTimeout(() => it.setState({ status: "warn" }), 4000);
-    setTimeout(() => it.setState({ status: "ready" }), 6000);
+    if (this.debounce === true) return;
 
+    const it = this; // This context will be lost in anon funcs in setTimeout, so save in var
 
+    const { url, options={}, data="" } = this.props.http;
+
+    if (url) {
+      // Prevent other requests while performing this one
+      this.debounce = true;
+
+      const req = https.request(url, options, (res) => {
+        const ok = res.statusCode.toString().startsWith("2");
+        if (ok) {
+          // OK request
+          this.setState({ status: "ok" });
+          setTimeout(() => {it.setState({ status: "ready" }); it.debounce = false}, 2000);
+        } else {
+          // Something other than 2XX was given
+          this.setState({ status: "warn" });
+          setTimeout(() => {it.setState({ status: "ready" }); it.debounce = false}, 2000);
+        }
+
+        res.on("data", (chunk) => {
+          if (!ok) console.log(chunk.toString());
+        })
+      });
+
+      req.on("error", () => {
+        // Request failed
+        this.setState({ status: "err" });
+        setTimeout(() => {it.setState({ status: "ready" }); it.debounce = false}, 2000);
+      });
+
+      // Add data before sending
+      if (data && options.method !== "GET") req.write(data);
+      req.end();
+    } 
   }
 
   render() {
